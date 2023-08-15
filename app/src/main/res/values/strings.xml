@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Jot</string>
+    <string name="title">Title</string>
+    <string name="note">Note</string>
+    <string name="notes">Notes</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="back_button">Back Button</string>
+    <string name="jot">Jot</string>
+    <string name="add_note">Add Note</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="jot_down_notes">Jot down notes!</string>
+    <string name="press_the_plus_button">Press the + button at the bottom of the screen to create a new note.</string>
+    <string name="grid_layout">Grid Layout</string>
+    <string name="linear_layout">Linear Layout</string>
+</resources>
