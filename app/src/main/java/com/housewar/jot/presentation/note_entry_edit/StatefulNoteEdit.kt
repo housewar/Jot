@@ -5,11 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.housewar.jot.R
 import com.housewar.jot.navigation.NavDestination
 import com.housewar.jot.presentation.note_entry_edit.util.UiEvent
-import com.housewar.jot.presentation.util.AppViewModelProvider
 import com.housewar.jot.presentation.note_entry_edit.view_model.NoteEditViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -32,7 +31,7 @@ fun StatefulNoteEdit(
     /* View Model, State, and Launched Effect are declared outside the screen composable.
      * This makes things nice and clean and allows for previews.
      */
-    val viewModel: NoteEditViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    val viewModel: NoteEditViewModel = hiltViewModel() //viewModel(factory = AppViewModelProvider.Factory)
     // minimal state declarations to simplify the pass through to the screen composable
     val uiState by viewModel.uiState.collectAsState()
 

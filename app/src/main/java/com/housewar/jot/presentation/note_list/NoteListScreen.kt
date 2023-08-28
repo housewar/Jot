@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.housewar.jot.R
 import com.housewar.jot.data.SampleNoteListProvider
+import com.housewar.jot.data.preferences.util.ListLayout
 import com.housewar.jot.domain.model.Note
 import com.housewar.jot.presentation.JotTopBar
 import com.housewar.jot.presentation.note_list.components.NoteCard
@@ -45,7 +46,7 @@ fun NoteListScreen(
     navToNoteEntry: () -> Unit = {},
     navToNoteEdit: (Int) -> Unit = {},
     onEvent: (NoteListEvent) -> Unit = {},
-    selectLayout: (Boolean) -> Unit = {}
+    selectLayout: () -> Unit = {}
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -57,7 +58,7 @@ fun NoteListScreen(
                 canNavigateBack = false,
                 actions = {
                     IconButton(
-                        onClick = {selectLayout(!layoutState.isLinearLayout)}
+                        onClick = {selectLayout()}
                     ) {
                         Icon(
                             painter = painterResource(layoutState.toggleIcon),
@@ -93,7 +94,7 @@ fun NoteListScreen(
                     modifier = Modifier.padding(16.dp)
                 )
             } else {
-                if( layoutState.isLinearLayout ){
+                if( layoutState.listLayout == ListLayout.LINEAR ){
                     LazyColumn(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -150,7 +151,7 @@ fun NoteGridScreenPreview() {
             notes = SampleNoteListProvider.getNoteList()
         ),
         layoutState = LayoutUiState(
-            isLinearLayout = false
+            listLayout = ListLayout.LINEAR
         )
     )
 }

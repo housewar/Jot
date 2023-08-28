@@ -3,7 +3,7 @@ package com.housewar.jot.domain.repository
 import com.housewar.jot.domain.model.Note
 import kotlinx.coroutines.flow.Flow
 
-interface NoteRepository{
+interface NoteRepository {
     fun getNoteStream(id: Int): Flow<Note>
 
     fun getAllNotesStream(): Flow<List<Note>>

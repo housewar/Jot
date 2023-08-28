@@ -9,6 +9,7 @@ import com.housewar.jot.domain.use_case.NoteUseCases
 import com.housewar.jot.presentation.note_entry_edit.NoteEditDestination
 import com.housewar.jot.presentation.note_entry_edit.util.NoteEditEvent
 import com.housewar.jot.presentation.note_entry_edit.util.UiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +20,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteEditViewModel(
+@HiltViewModel
+class NoteEditViewModel @Inject constructor(
     ssHandle: SavedStateHandle,
     private val noteUseCases: NoteUseCases
 ) : ViewModel() {

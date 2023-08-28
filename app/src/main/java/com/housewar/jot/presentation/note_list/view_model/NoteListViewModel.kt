@@ -3,10 +3,10 @@ package com.housewar.jot.presentation.note_list.view_model
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.housewar.jot.domain.model.Note
-import com.housewar.jot.domain.preferences.UserPreferencesRepository
 import com.housewar.jot.domain.use_case.NoteUseCases
 import com.housewar.jot.domain.util.OrderBy
 import com.housewar.jot.presentation.note_list.util.NoteListEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,8 +15,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteListViewModel(
+@HiltViewModel
+class NoteListViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases
 ) : ViewModel() {
 

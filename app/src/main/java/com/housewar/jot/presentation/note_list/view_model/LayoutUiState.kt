@@ -1,11 +1,18 @@
 package com.housewar.jot.presentation.note_list.view_model
 
 import com.housewar.jot.R
+import com.housewar.jot.data.preferences.util.ListLayout
 
 data class LayoutUiState (
-    val isLinearLayout: Boolean = true,
+    val listLayout: ListLayout = ListLayout.LINEAR,
     val toggleContentDescription: Int =
-        if (isLinearLayout) R.string.grid_layout else R.string.linear_layout,
+        when (listLayout){
+            ListLayout.LINEAR -> R.string.grid_layout
+            ListLayout.GRID -> R.string.linear_layout
+        },
     val toggleIcon: Int =
-        if (isLinearLayout) R.drawable.ic_grid_layout else R.drawable.ic_linear_layout
+        when (listLayout){
+            ListLayout.LINEAR -> R.drawable.ic_grid_layout
+            ListLayout.GRID -> R.drawable.ic_linear_layout
+        }
 )
