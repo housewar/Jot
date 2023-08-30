@@ -16,7 +16,6 @@ import com.housewar.jot.domain.use_case.GetNote
 import com.housewar.jot.domain.use_case.GetNotes
 import com.housewar.jot.domain.use_case.InsertNote
 import com.housewar.jot.domain.use_case.NoteUseCases
-import com.housewar.jot.domain.use_case.ReorderNotes
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,8 +55,7 @@ object AppModule {
             getNotes = GetNotes(noteRepository),
             getNote = GetNote(noteRepository),
             deleteNote = DeleteNote(noteRepository),
-            insertNote = InsertNote(noteRepository),
-            reorderNotes = ReorderNotes()
+            insertNote = InsertNote(noteRepository)
         )
     }
 

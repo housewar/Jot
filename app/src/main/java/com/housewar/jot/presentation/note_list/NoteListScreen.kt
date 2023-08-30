@@ -36,11 +36,11 @@ import com.housewar.jot.presentation.JotTopBar
 import com.housewar.jot.presentation.note_list.components.NoteCard
 import com.housewar.jot.presentation.note_list.util.NoteListEvent
 import com.housewar.jot.presentation.note_list.view_model.LayoutUiState
-import com.housewar.jot.presentation.note_list.view_model.NoteListUiState
+import kotlinx.coroutines.flow.flow
 
 @Composable
 fun NoteListScreen(
-    uiState: NoteListUiState,
+    notes: List<Note>,
     layoutState: LayoutUiState,
     modifier: Modifier = Modifier,
     navToNoteEntry: () -> Unit = {},
@@ -85,7 +85,7 @@ fun NoteListScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            if ( uiState.notes.isEmpty() ) {
+            if ( notes.isEmpty() ) {
                 NoteCard(
                     note = Note(
                         title = stringResource(R.string.jot_down_notes),
@@ -99,7 +99,7 @@ fun NoteListScreen(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        items(uiState.notes) { note ->
+                        items(notes) { note ->
                             NoteCard(
                                 note = note,
                                 modifier = Modifier.clickable(enabled = true) {
@@ -117,7 +117,7 @@ fun NoteListScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        items(uiState.notes) { note ->
+                        items(notes) { note ->
                             NoteCard(
                                 note = note,
                                 modifier = Modifier.clickable(enabled = true) {
@@ -137,9 +137,14 @@ fun NoteListScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun NoteLinearListScreenPreview() {
+    val notes = flow{
+        while(true){
+            emit(SampleNoteListProvider.getNoteList())
+        }
+    }
     NoteListScreen(
-        uiState = NoteListUiState(SampleNoteListProvider.getNoteList()),
-        layoutState = LayoutUiState()
+        notes = SampleNoteListProvider.getNoteList(),
+        layoutState = LayoutUiState(listLayout = ListLayout.LINEAR)
     )
 }
 
@@ -147,11 +152,7 @@ fun NoteLinearListScreenPreview() {
 @Composable
 fun NoteGridScreenPreview() {
     NoteListScreen(
-        uiState = NoteListUiState(
-            notes = SampleNoteListProvider.getNoteList()
-        ),
-        layoutState = LayoutUiState(
-            listLayout = ListLayout.LINEAR
-        )
+        notes = SampleNoteListProvider.getNoteList(),
+        layoutState = LayoutUiState(listLayout = ListLayout.GRID)
     )
 }

@@ -31,7 +31,7 @@ fun StatefulNoteEdit(
     /* View Model, State, and Launched Effect are declared outside the screen composable.
      * This makes things nice and clean and allows for previews.
      */
-    val viewModel: NoteEditViewModel = hiltViewModel() //viewModel(factory = AppViewModelProvider.Factory)
+    val viewModel: NoteEditViewModel = hiltViewModel()
     // minimal state declarations to simplify the pass through to the screen composable
     val uiState by viewModel.uiState.collectAsState()
 

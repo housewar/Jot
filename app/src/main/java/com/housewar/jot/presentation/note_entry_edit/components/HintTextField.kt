@@ -12,8 +12,7 @@ import androidx.compose.ui.text.TextStyle
 @Composable
 fun HintTextField(
     text: String,
-    hint: String,
-    showHint: Boolean,
+    placeholderText: String,
     style: TextStyle,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -25,9 +24,9 @@ fun HintTextField(
             onValueChange = onValueChange,
             textStyle = style
         )
-        if( showHint ){
+        if( text.isBlank() and placeholderText.isNotBlank() ){
             Text(
-                text = hint,
+                text = placeholderText,
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.DarkGray,
                 style = style

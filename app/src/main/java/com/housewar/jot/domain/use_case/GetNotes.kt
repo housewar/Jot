@@ -10,11 +10,7 @@ import kotlinx.coroutines.flow.map
 class GetNotes(
     private val repository: NoteRepository
 ) {
-    operator fun invoke(
-        orderBy: OrderBy = OrderBy.Timestamp(OrderDirection.Descending)
-    ): Flow<List<Note>> {
-        return repository.getAllNotesStream().map { notes ->
-            ReorderNotes()(notes,orderBy)
-        }
+    operator fun invoke(): Flow<List<Note>> {
+        return repository.getAllNotesStream()
     }
 }

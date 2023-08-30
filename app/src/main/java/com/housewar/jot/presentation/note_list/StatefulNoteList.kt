@@ -22,12 +22,12 @@ fun StatefulNoteList(
     navToNoteEdit: (Int) -> Unit = {}
 ) {
     val viewModel: NoteListViewModel = hiltViewModel()//viewModel(factory = AppViewModelProvider.Factory)
-    val uiState by viewModel.uiState.collectAsState()
+    val notes by viewModel.notes.collectAsState()
     val layoutViewModel: LayoutViewModel = hiltViewModel() //viewModel(factory = AppViewModelProvider.Factory)
     val layoutState by layoutViewModel.uiState.collectAsState()
 
     NoteListScreen(
-        uiState = uiState,
+        notes = notes,
         layoutState = layoutState,
         modifier = modifier,
         navToNoteEntry = navToNoteEntry,

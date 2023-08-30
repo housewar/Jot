@@ -17,8 +17,6 @@ class LayoutViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val userPreferencesFlow = userPreferencesRepository.userPreferencesFlow
-
     val uiState: StateFlow<LayoutUiState> =
         userPreferencesRepository.userPreferencesFlow.map { userPref ->
             LayoutUiState(

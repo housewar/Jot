@@ -1,28 +1,25 @@
 package com.housewar.jot.presentation.note_entry_edit.view_model
 
 import com.housewar.jot.domain.model.Note
+import java.util.Date
 
 data class NoteEditUiState(
-    val note: Note = Note(),
-    val title: NoteTextFieldState = NoteTextFieldState(),
-    val body: NoteTextFieldState = NoteTextFieldState(),
+    val id: Int = 0,
+    val title: String = "",
+    val body: String = "",
+    val timeStamp: Long = Date().time
 )
 
 fun NoteEditUiState.toNote() : Note = Note(
-    id = note.id,
-    title = title.text,
-    body = body.text,
-    timeStamp = note.timeStamp
+    id = this.id,
+    title = this.title,
+    body = this.body,
+    timeStamp = this.timeStamp
 )
 
 fun Note.toNoteEditUiState() : NoteEditUiState = NoteEditUiState(
-    note = this,
-    title = NoteTextFieldState(
-        text = title,
-        showHint = title.isBlank()
-    ),
-    body = NoteTextFieldState(
-        text = body,
-        showHint = body.isBlank()
-    )
+    id = this.id,
+    title = this.title,
+    body = this.body,
+    timeStamp = this.timeStamp
 )

@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.housewar.jot.domain.model.InvalidNoteException
-import com.housewar.jot.domain.model.Note
 import com.housewar.jot.domain.use_case.NoteUseCases
 import com.housewar.jot.presentation.note_entry_edit.NoteEditDestination
 import com.housewar.jot.presentation.note_entry_edit.util.NoteEditEvent
@@ -28,7 +27,7 @@ class NoteEditViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases
 ) : ViewModel() {
     // get the noteID argument, if it's empty, pass 0
-    private val noteID: Int = ssHandle[NoteEditDestination.noteIdArg] ?: -1
+    private val noteId: Int = ssHandle[NoteEditDestination.noteIdArg] ?: -1
 
     private val _uiState: MutableStateFlow<NoteEditUiState> = MutableStateFlow(NoteEditUiState())
     val uiState: StateFlow<NoteEditUiState> = _uiState
@@ -41,8 +40,8 @@ class NoteEditViewModel @Inject constructor(
 
     // if the noteID argument is not -1, replace the empty note with the actual note
     init {
-        if (noteID != -1) {
-            getNoteJob = noteUseCases.getNote(noteID).filterNotNull().map { note ->
+        if (noteId != -1) {
+            getNoteJob = noteUseCases.getNote(noteId).filterNotNull().map { note ->
                 _uiState.update {
                     note.toNoteEditUiState()
                 }
@@ -50,23 +49,8 @@ class NoteEditViewModel @Inject constructor(
         }
     }
 
-    // saves the deleted Note so that it can be restored.
-    private var deletedNote: Note? = null
-
     fun onEvent(event: NoteEditEvent) {
         when (event) {
-            is NoteEditEvent.DeleteNote ->
-                viewModelScope.launch {
-                    deletedNote = _uiState.value.note
-                    noteUseCases.deleteNote(_uiState.value.note)
-                }
-
-            NoteEditEvent.RestoreNote ->
-                viewModelScope.launch {
-                    deletedNote?.let { noteUseCases.insertNote(it) }
-                    deletedNote = null
-                }
-
             NoteEditEvent.SaveNote ->
                 viewModelScope.launch {
                     try {
@@ -80,10 +64,7 @@ class NoteEditViewModel @Inject constructor(
             is NoteEditEvent.UpdateBody -> {
                 _uiState.update {
                     it.copy(
-                        body = NoteTextFieldState(
-                            text = event.text,
-                            showHint = event.text.isBlank()
-                        )
+                        body = event.text
                     )
                 }
             }
@@ -91,10 +72,7 @@ class NoteEditViewModel @Inject constructor(
             is NoteEditEvent.UpdateTitle -> {
                 _uiState.update {
                     it.copy(
-                        title = NoteTextFieldState(
-                            text = event.text,
-                            showHint = event.text.isBlank()
-                        )
+                        title = event.text
                     )
                 }
             }
